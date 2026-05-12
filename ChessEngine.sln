@@ -5,6 +5,10 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessEngine", "Apps\ConsoleApplication\ChessEngine.csproj", "{059335E4-C017-498A-9BA8-9C6BB8398953}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BoardRepresentation", "BoardRepresentation", "{AB26824E-3E15-4CDB-A7CE-FCC3030DF958}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Board", "BoardRepresentation\Board.csproj", "{28E39504-F47E-405D-8D1D-C4024AC52FBD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,8 +31,23 @@ Global
 		{059335E4-C017-498A-9BA8-9C6BB8398953}.Release|x64.Build.0 = Release|Any CPU
 		{059335E4-C017-498A-9BA8-9C6BB8398953}.Release|x86.ActiveCfg = Release|Any CPU
 		{059335E4-C017-498A-9BA8-9C6BB8398953}.Release|x86.Build.0 = Release|Any CPU
+		{28E39504-F47E-405D-8D1D-C4024AC52FBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28E39504-F47E-405D-8D1D-C4024AC52FBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28E39504-F47E-405D-8D1D-C4024AC52FBD}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{28E39504-F47E-405D-8D1D-C4024AC52FBD}.Debug|x64.Build.0 = Debug|Any CPU
+		{28E39504-F47E-405D-8D1D-C4024AC52FBD}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{28E39504-F47E-405D-8D1D-C4024AC52FBD}.Debug|x86.Build.0 = Debug|Any CPU
+		{28E39504-F47E-405D-8D1D-C4024AC52FBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28E39504-F47E-405D-8D1D-C4024AC52FBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28E39504-F47E-405D-8D1D-C4024AC52FBD}.Release|x64.ActiveCfg = Release|Any CPU
+		{28E39504-F47E-405D-8D1D-C4024AC52FBD}.Release|x64.Build.0 = Release|Any CPU
+		{28E39504-F47E-405D-8D1D-C4024AC52FBD}.Release|x86.ActiveCfg = Release|Any CPU
+		{28E39504-F47E-405D-8D1D-C4024AC52FBD}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{28E39504-F47E-405D-8D1D-C4024AC52FBD} = {AB26824E-3E15-4CDB-A7CE-FCC3030DF958}
 	EndGlobalSection
 EndGlobal
