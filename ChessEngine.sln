@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessEngine1", "ChessEngine1\ChessEngine1.csproj", "{059335E4-C017-498A-9BA8-9C6BB8398953}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessEngine", "Apps\ConsoleApplication\ChessEngine.csproj", "{059335E4-C017-498A-9BA8-9C6BB8398953}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
