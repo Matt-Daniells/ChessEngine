@@ -1,7 +1,29 @@
-public class HelloWorld
+using Board;
+
+
+namespace ChessEngine
 {
-    public static void Main(string[] args)
+    public class Program
     {
-        System.Console.WriteLine("Hello, world!");
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Hello, world!");
+            var board = new BoardGen();
+            PrintBoard(board);
+        }
+
+        private static void PrintBoard(BoardGen board)
+        {
+            int size = board.Size;
+            // Needs work to accurately map and print a chess board
+            for (int y=0; y < size; y++)
+            {
+                for (int x=0; x < size; x++)
+                {
+                    Console.WriteLine(board.generated_board[x,y].Display_Location());
+                }
+                Console.WriteLine(Environment.NewLine);
+            }
+        }
     }
 }

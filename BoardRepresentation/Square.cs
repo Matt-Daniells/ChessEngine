@@ -7,5 +7,10 @@ namespace Board
     {
         public int Rank = rank;
         public int File = file;
+
+        public string Display_Location()
+        {
+            return $"{(char)('a' + File)}{Rank + 1}";
+        }
     }
 }
