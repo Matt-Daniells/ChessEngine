@@ -9,6 +9,8 @@ namespace Board
         public int Rank = rank;
         public int File = file;
 
+        public Piece? Piece { get; set; }
+
         // return a value 0-63 for each square
         public int DisplayValue()
         {
@@ -19,6 +21,11 @@ namespace Board
         public string DisplayLocation()
         {
             return $"{(char)('a' + File)}{Rank + 1}";
+        }
+
+        public bool IsOccupied()
+        {
+            return Piece != null;
         }
     }
 }

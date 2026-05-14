@@ -15,6 +15,7 @@ namespace Board
     {
         private readonly string piece_colour;
         private readonly PieceType piece_type;
+        public abstract char Unicode { get; }
 
         protected Piece(string colour, PieceType type)
         {
