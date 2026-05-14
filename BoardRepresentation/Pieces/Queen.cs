@@ -2,11 +2,11 @@ namespace Board.Pieces
 {
     public class Queen
     {
-        static string _UNICODE = "\u2655";
+        private const char WhiteUnicode = '\u2655';
+        private const char BlackUnicode = '\u265B';
+        
         // returns the unicode symbol for the piece
-        public static char Unicode
-        {
-            get {return Convert.ToChar(_UNICODE); }
-        }
+        public static char Unicode(string colour)
+            => colour == "WHITE" ? WhiteUnicode : BlackUnicode;
     }
 }
