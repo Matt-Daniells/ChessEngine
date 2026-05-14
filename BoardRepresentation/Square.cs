@@ -1,4 +1,5 @@
 using System.Data;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Board
 {
@@ -8,7 +9,14 @@ namespace Board
         public int Rank = rank;
         public int File = file;
 
-        public string Display_Location()
+        // return a value 0-63 for each square
+        public int DisplayValue()
+        {
+            return Rank*8 + File;
+        }
+
+        // return a chessboard style value for each square i.e a1
+        public string DisplayLocation()
         {
             return $"{(char)('a' + File)}{Rank + 1}";
         }

@@ -1,4 +1,5 @@
 using Board;
+using Board.Pieces;
 
 
 namespace ChessEngine
@@ -10,17 +11,18 @@ namespace ChessEngine
             Console.WriteLine("Hello, world!");
             var board = new BoardGen();
             PrintBoard(board);
+            Console.WriteLine(Queen.Unicode);
         }
 
         private static void PrintBoard(BoardGen board)
         {
             int size = board.Size;
             // Needs work to accurately map and print a chess board
-            for (int y=0; y < size; y++)
+            for (int x=0; x < size; x++)
             {
-                for (int x=0; x < size; x++)
+                for (int y=0; y < size; y++)
                 {
-                    Console.WriteLine(board.generated_board[x,y].Display_Location());
+                    Console.Write(board.generated_board[x,y].DisplayValue());
                 }
                 Console.WriteLine(Environment.NewLine);
             }
