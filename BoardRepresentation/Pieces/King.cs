@@ -5,8 +5,8 @@ namespace Board.Pieces
         public King(string colour)
         : base(colour, PieceType.King) {}
 
-        private const char WhiteUnicode = '\u2655';
-        private const char BlackUnicode = '\u265B';
+        private const char WhiteUnicode = '\u2654';
+        private const char BlackUnicode = '\u265A';
         
         // returns the unicode symbol for the piece
         public override char Unicode => Colour == "WHITE" ? WhiteUnicode : BlackUnicode;

@@ -8,6 +8,7 @@ namespace Board.Pieces
         : base(colour, PieceType.Rook) {}
 
         private const char WhiteUnicode = '\u2656';
+
         private const char BlackUnicode = '\u265C';
         
         // returns the unicode symbol for the piece
