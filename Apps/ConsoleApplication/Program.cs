@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using Board;
 using Board.Pieces;
 
@@ -22,12 +21,13 @@ namespace ChessEngine
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.WriteLine();
 
-            for (int x=7; x >= 0; x--)
+            for (int x=size+1; x >= 2; x--)
             {
                 Console.ResetColor();
-                Console.Write($"{x + 1} ");
 
-                for (int y=0; y < size; y++)
+                Console.Write($"{(x-2) + 1} ");
+
+                for (int y=1; y <= size; y++)
                 {
                     bool isLightSquare = (x + y) % 2 == 0;
 
@@ -54,36 +54,36 @@ namespace ChessEngine
             if (standard)
             {
                 // White Pieces
-                board.generated_board[0, 0].Piece = new Rook("WHITE");
-                board.generated_board[0, 1].Piece = new Knight("WHITE");
-                board.generated_board[0, 2].Piece = new Bishop("WHITE");
-                board.generated_board[0, 3].Piece = new Queen("WHITE");
-                board.generated_board[0, 4].Piece = new King("WHITE");
-                board.generated_board[0, 5].Piece = new Bishop("WHITE");
-                board.generated_board[0, 6].Piece = new Knight("WHITE");
-                board.generated_board[0, 7].Piece = new Rook("WHITE");
+                board.generated_board[2, 1].Piece = new Rook("WHITE");
+                board.generated_board[2, 2].Piece = new Knight("WHITE");
+                board.generated_board[2, 3].Piece = new Bishop("WHITE");
+                board.generated_board[2, 4].Piece = new Queen("WHITE");
+                board.generated_board[2, 5].Piece = new King("WHITE");
+                board.generated_board[2, 6].Piece = new Bishop("WHITE");
+                board.generated_board[2, 7].Piece = new Knight("WHITE");
+                board.generated_board[2, 8].Piece = new Rook("WHITE");
                 
                 // White pawns
-                for (int y = 0; y < size; y++)
+                for (int y = 1; y < size+1; y++)
                 {
-                    board.generated_board[1, y].Piece = new Pawn("WHITE");
+                    board.generated_board[3, y].Piece = new Pawn("WHITE");
                 }
                 
                 // Black pawns
-                for (int y = 0; y < size; y++)
+                for (int y = 1; y < size+1; y++)
                 {
-                    board.generated_board[6, y].Piece = new Pawn("BLACK");
+                    board.generated_board[8, y].Piece = new Pawn("BLACK");
                 }
                 
                 // Black pieces
-                board.generated_board[7, 0].Piece = new Rook("BLACK");
-                board.generated_board[7, 1].Piece = new Knight("BLACK");
-                board.generated_board[7, 2].Piece = new Bishop("BLACK");
-                board.generated_board[7, 3].Piece = new Queen("BLACK");
-                board.generated_board[7, 4].Piece = new King("BLACK");
-                board.generated_board[7, 5].Piece = new Bishop("BLACK");
-                board.generated_board[7, 6].Piece = new Knight("BLACK");
-                board.generated_board[7, 7].Piece = new Rook("BLACK");
+                board.generated_board[9, 1].Piece = new Rook("BLACK");
+                board.generated_board[9, 2].Piece = new Knight("BLACK");
+                board.generated_board[9, 3].Piece = new Bishop("BLACK");
+                board.generated_board[9, 4].Piece = new Queen("BLACK");
+                board.generated_board[9, 5].Piece = new King("BLACK");
+                board.generated_board[9, 6].Piece = new Bishop("BLACK");
+                board.generated_board[9, 7].Piece = new Knight("BLACK");
+                board.generated_board[9, 8].Piece = new Rook("BLACK");
             }
         }
     }

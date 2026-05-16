@@ -1,6 +1,3 @@
-using System.Data;
-using System.Reflection.Metadata.Ecma335;
-
 namespace Board
 {
     // Using structs as they're more efficient than classes when in arrays
@@ -8,13 +5,15 @@ namespace Board
     {
         public int Rank = rank;
         public int File = file;
+        public int Value = -1;
 
         public Piece? Piece { get; set; }
 
         // return a value 0-63 for each square
-        public int DisplayValue()
+
+        public void SetValue(int value)
         {
-            return Rank*8 + File;
+            Value = value;
         }
 
         // return a chessboard style value for each square i.e a1
