@@ -8,9 +8,28 @@ namespace ChessEngine
     {
         static void Main(string[] args)
         {
+            
             var board = new BoardGen();
             GeneratePieces(board, true);
             PrintBoard(board);
+
+            Console.WriteLine("Press n to start a game, or Esc to exit.");
+            ConsoleKeyInfo KeyPress = Console.ReadKey();
+
+            switch (KeyPress.Key)
+            {
+                case ConsoleKey.Escape:
+                    Environment.Exit(0);
+                    break;
+
+                case ConsoleKey.N:
+                    var game = new Game(board);
+                    break;
+
+                default:
+                    break;
+            }
+
 
         }
 
