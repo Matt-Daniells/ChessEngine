@@ -25,7 +25,7 @@ namespace ChessEngine
             {
                 Console.ResetColor();
 
-                Console.Write($"{(x-2) + 1} ");
+                Console.Write($"{(x-2) + 1} "); //rank labels
 
                 for (int y=1; y <= size; y++)
                 {
@@ -33,7 +33,7 @@ namespace ChessEngine
 
                     Console.BackgroundColor = isLightSquare
                         ? ConsoleColor.Gray
-                        : ConsoleColor.Green;
+                        : ConsoleColor.Green; // makes the pieces easier to see
 
                     Console.ForegroundColor = ConsoleColor.Black;
 
@@ -42,7 +42,7 @@ namespace ChessEngine
                 }
                 Console.Write(Environment.NewLine);
             }
-            Console.WriteLine("  a b c d e f g h");
+            Console.WriteLine("  a b c d e f g h"); //file labels
             Console.WriteLine();
         }
 

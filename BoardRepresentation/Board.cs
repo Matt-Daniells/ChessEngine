@@ -24,7 +24,7 @@ namespace Board
                 }
             }
             
-            // Set values within the 8x8 board
+            // Set values within the 8x8 board 0-63
             int i=0;
             for (int x=2; x < BOARD_SIZE+2; x++)
             {
@@ -37,6 +37,7 @@ namespace Board
         }  
         public int Size
         {
+            // Can change later to incorporate user-defined board size
             get { return BOARD_SIZE; }
         }
     }
