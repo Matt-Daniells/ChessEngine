@@ -10,11 +10,10 @@ namespace ChessEngine
         {
             
             var board = new BoardGen();
-            GeneratePieces(board, true);
-            PrintBoard(board);
 
             Console.WriteLine("Press n to start a game, or Esc to exit.");
             ConsoleKeyInfo KeyPress = Console.ReadKey();
+            Console.WriteLine();
 
             switch (KeyPress.Key)
             {
@@ -23,7 +22,22 @@ namespace ChessEngine
                     break;
 
                 case ConsoleKey.N:
-                    var game = new Game(board);
+                    Console.WriteLine("Which side do you want to play as? (w or b)");
+                    string? input = Console.ReadLine();
+
+                    if (input == "w" || input == "b")
+                    {
+                        GeneratePieces(board, true);
+                        PrintBoard(board, input);
+                        var game = new Game(board, input);
+                    }
+
+                    else
+                    {
+                        // Doesn't loop, needs fixing
+                        Console.WriteLine("Incorrect input. Exiting...");
+                    }
+                    
                     break;
 
                 default:
@@ -33,36 +47,61 @@ namespace ChessEngine
 
         }
 
-        private static void PrintBoard(BoardGen board)
+        private static void PrintBoard(BoardGen board, string Colour)
         {
             int size = board.Size;
+            string colour = Colour;
 
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.WriteLine();
 
-            for (int x=size+1; x >= 2; x--)
+            if (colour == "w")
             {
-                Console.ResetColor();
-
-                Console.Write($"{(x-2) + 1} "); //rank labels
-
-                for (int y=1; y <= size; y++)
+                for (int x=size+1; x >= 2; x--)
                 {
-                    bool isLightSquare = (x + y) % 2 == 0;
-
-                    Console.BackgroundColor = isLightSquare
-                        ? ConsoleColor.Gray
-                        : ConsoleColor.Green; // makes the pieces easier to see
-
-                    Console.ForegroundColor = ConsoleColor.Black;
-
-                    Console.Write($"{board.generated_board[x,y].Piece?.Unicode ?? ' '} ");
                     Console.ResetColor();
+                    Console.Write($"{(x-2) + 1} "); //rank labels
+                    
+                    for (int y=1; y <= size; y++)
+                    {
+                        PrintSquare(board, x, y);
+                    }
+                    Console.WriteLine();
                 }
-                Console.Write(Environment.NewLine);
+                Console.WriteLine("  a b c d e f g h"); // file labels
             }
-            Console.WriteLine("  a b c d e f g h"); //file labels
+
+            else if (colour == "b")
+            {
+                for (int x=2; x <= size+1; x++)
+                {
+                    Console.ResetColor();
+                    Console.Write($"{(x-2) + 1} "); //rank labels
+                    
+                    for (int y=size; y >= 1; y--)
+                    {
+                        PrintSquare(board, x, y);
+                    }
+                    Console.WriteLine();
+                }
+                Console.WriteLine("  h g f e d c b a"); // file labels
+            }
+
+            else
+            {
+                Console.WriteLine("Wrong input");
+            }
             Console.WriteLine();
+        }
+
+        private static void PrintSquare(BoardGen board, int x, int y)
+        {
+            bool isLightSquare = (x + y) % 2 == 0;
+
+            Console.BackgroundColor = isLightSquare ? ConsoleColor.Gray : ConsoleColor.Green; // makes the pieces easier to see
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.Write($"{board.generated_board[x,y].Piece?.Unicode ?? ' '} ");
+            Console.ResetColor();
         }
 
         private static void GeneratePieces(BoardGen board, bool standard)
