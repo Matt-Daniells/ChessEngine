@@ -25,19 +25,25 @@ namespace ChessEngine
                     Console.WriteLine("Which side do you want to play as? (w or b)");
                     string? input = Console.ReadLine();
 
-                    if (input == "w" || input == "b")
+                    if (input == "w")
                     {
                         GeneratePieces(board, true);
-                        PrintBoard(board, input);
-                        var game = new Game(board, input);
+                        PrintBoard(board, "White");
+                        var game = new Game(board, "White");
                     }
 
+                    else if (input == "b")
+                    {
+                        GeneratePieces(board, true);
+                        PrintBoard(board, "Black");
+                        var game = new Game(board, "Black");
+                    }
+                    
                     else
                     {
                         // Doesn't loop, needs fixing
                         Console.WriteLine("Incorrect input. Exiting...");
                     }
-                    
                     break;
 
                 default:
@@ -55,7 +61,7 @@ namespace ChessEngine
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.WriteLine();
 
-            if (colour == "w")
+            if (colour == "White")
             {
                 for (int x=size+1; x >= 2; x--)
                 {
@@ -71,7 +77,7 @@ namespace ChessEngine
                 Console.WriteLine("  a b c d e f g h"); // file labels
             }
 
-            else if (colour == "b")
+            else if (colour == "Black")
             {
                 for (int x=2; x <= size+1; x++)
                 {

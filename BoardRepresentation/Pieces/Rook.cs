@@ -1,5 +1,3 @@
-using System.Runtime.CompilerServices;
-
 namespace Board.Pieces
 {
     public class Rook : Piece

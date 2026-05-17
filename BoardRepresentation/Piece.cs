@@ -1,4 +1,3 @@
-
 namespace Board
 {
     public enum PieceType
