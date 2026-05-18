@@ -1,6 +1,7 @@
 namespace Board
 {
-    // Using structs as they're more efficient than classes when in arrays
+    // represents a single board square including position, occupancy, and metadata
+    // the struct is used inside the board array for fast access
     public struct Square(int rank, int file)
     {
         public int Rank = rank;
@@ -9,8 +10,7 @@ namespace Board
 
         public Piece? Piece { get; set; }
 
-        // return a value 0-63 for each square
-
+        // set a unique numeric value for this square for board indexing (0-63 or -1)
         public void SetValue(int value)
         {
             Value = value;
@@ -22,6 +22,7 @@ namespace Board
             return $"{(char)('a' + File)}{Rank + 1}";
         }
 
+        // true when a piece is present on this square
         public bool IsOccupied()
         {
             return Piece != null;

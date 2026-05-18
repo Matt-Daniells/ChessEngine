@@ -1,21 +1,23 @@
 namespace Board
 {
+    // board generator containing the board grid with sentinel padding
+    // the board uses a 10x12 array so boundary checks are easier and the playable area is 8x8
     public class BoardGen
     {
-        // can use console inputs later for custom boardsizes?
+        // standard chess board size (8x8)
         const int BOARD_SIZE = 8;
         public Square[,] generated_board;
 
         public BoardGen()
         {
-            // Add Sentinel squares, make it 10x12
+            // add sentinel squares around the playable board so out of bounds detection is easier
             generated_board = new Square[BOARD_SIZE+4, BOARD_SIZE+2];
             GenerateBoard();
         }
 
         private void GenerateBoard()
         {
-            //Initialise all squares, set value to -1
+            // initialize all squares and mark them as invalid until the playable board is assigned
             for (int x = 0; x < BOARD_SIZE + 4; x++)
             {
                 for (int y = 0; y < BOARD_SIZE + 2; y++)
@@ -24,7 +26,7 @@ namespace Board
                 }
             }
             
-            // Set values within the 8x8 board 0-63
+            // set values within the 8x8 board 0-63
             int i=0;
             for (int x=2; x < BOARD_SIZE+2; x++)
             {
@@ -37,7 +39,7 @@ namespace Board
         }  
         public int Size
         {
-            // Can change later to incorporate user-defined board size
+            // current board size for the playable area
             get { return BOARD_SIZE; }
         }
     }

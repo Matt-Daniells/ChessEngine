@@ -8,7 +8,6 @@ namespace Board.Pieces
         private const char WhiteUnicode = '\u2654';
         private const char BlackUnicode = '\u265A';
         
-        // returns the unicode symbol for the piece
         public override char Unicode => Colour == "WHITE" ? WhiteUnicode : BlackUnicode;
     }
 }

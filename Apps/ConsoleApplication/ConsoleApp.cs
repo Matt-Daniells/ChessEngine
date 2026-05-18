@@ -6,6 +6,7 @@ namespace ChessEngine
 {
     public class Program
     {
+        // main entry point. Prompts the user, chooses sides, and starts a game
         static void Main(string[] args)
         {
             
@@ -23,26 +24,24 @@ namespace ChessEngine
 
                 case ConsoleKey.N:
                     Console.WriteLine("Which side do you want to play as? (w or b)");
-                    string? input = Console.ReadLine();
 
-                    if (input == "w")
-                    {
-                        GeneratePieces(board, true);
-                        PrintBoard(board, "White");
-                        var game = new Game(board, "White");
-                    }
+                    KeyPress = Console.ReadKey();
+                    Console.WriteLine();
 
-                    else if (input == "b")
+                    switch (KeyPress.Key)
                     {
-                        GeneratePieces(board, true);
-                        PrintBoard(board, "Black");
-                        var game = new Game(board, "Black");
-                    }
+                        case ConsoleKey.W:
+                            StartGame(board, "White");
+                            break;
                     
-                    else
-                    {
-                        // Doesn't loop, needs fixing
-                        Console.WriteLine("Incorrect input. Exiting...");
+                        case ConsoleKey.B:
+                            StartGame(board, "Black");
+                            break;
+
+                        // need to fix so that it loops
+                        default:
+                            Console.WriteLine("Invalid input, exiting...");
+                            break;
                     }
                     break;
 
@@ -53,6 +52,15 @@ namespace ChessEngine
 
         }
 
+        private static void StartGame(BoardGen board, String colour)
+        {
+            // set up the initial board position, print the board, and begin the game loop
+            GeneratePieces(board, true);
+            PrintBoard(board, colour);
+            var game = new Game(board, colour);
+        }
+
+        // render the board from the perspective of the player (Dependent on colour)
         private static void PrintBoard(BoardGen board, string Colour)
         {
             int size = board.Size;
@@ -61,6 +69,7 @@ namespace ChessEngine
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.WriteLine();
 
+            //needs refactoring
             if (colour == "White")
             {
                 for (int x=size+1; x >= 2; x--)
@@ -100,6 +109,7 @@ namespace ChessEngine
             Console.WriteLine();
         }
 
+        // draw a single square on the console, including the board color and piece symbol (If there is one)
         private static void PrintSquare(BoardGen board, int x, int y)
         {
             bool isLightSquare = (x + y) % 2 == 0;
@@ -110,44 +120,43 @@ namespace ChessEngine
             Console.ResetColor();
         }
 
+        // populate the board with a standard chess starting position
         private static void GeneratePieces(BoardGen board, bool standard)
         {
-            int size = board.Size;
-            
-            // Standard piece layout
-            if (standard)
+            GenerateBackRank(board, 2, "WHITE");
+            GenerateBackRank(board, 9, "BLACK");
+            GeneratePawns(board);
+
+        }
+
+        // place a back rank on the specified board rank using the standard piece order
+        private static void GenerateBackRank(BoardGen board, int rank, string colour)
+        {
+            var pieces = new Piece[]
             {
-                // White Pieces
-                board.generated_board[2, 1].Piece = new Rook("WHITE");
-                board.generated_board[2, 2].Piece = new Knight("WHITE");
-                board.generated_board[2, 3].Piece = new Bishop("WHITE");
-                board.generated_board[2, 4].Piece = new Queen("WHITE");
-                board.generated_board[2, 5].Piece = new King("WHITE");
-                board.generated_board[2, 6].Piece = new Bishop("WHITE");
-                board.generated_board[2, 7].Piece = new Knight("WHITE");
-                board.generated_board[2, 8].Piece = new Rook("WHITE");
-                
-                // White pawns
-                for (int y = 1; y < size+1; y++)
-                {
-                    board.generated_board[3, y].Piece = new Pawn("WHITE");
-                }
-                
-                // Black pawns
-                for (int y = 1; y < size+1; y++)
-                {
-                    board.generated_board[8, y].Piece = new Pawn("BLACK");
-                }
-                
-                // Black pieces
-                board.generated_board[9, 1].Piece = new Rook("BLACK");
-                board.generated_board[9, 2].Piece = new Knight("BLACK");
-                board.generated_board[9, 3].Piece = new Bishop("BLACK");
-                board.generated_board[9, 4].Piece = new Queen("BLACK");
-                board.generated_board[9, 5].Piece = new King("BLACK");
-                board.generated_board[9, 6].Piece = new Bishop("BLACK");
-                board.generated_board[9, 7].Piece = new Knight("BLACK");
-                board.generated_board[9, 8].Piece = new Rook("BLACK");
+                new Rook(colour),
+                new Knight(colour),
+                new Bishop(colour),
+                new Queen(colour),
+                new King(colour),
+                new Bishop(colour),
+                new Knight(colour),
+                new Rook(colour)
+            };
+
+            for (int file = 1; file <= pieces.Length; file++)
+            {
+                board.generated_board[rank, file].Piece = pieces[file - 1];
+            }
+        }
+
+        // place pawns on the default second rank for each side
+        private static void GeneratePawns(BoardGen board)
+        {
+            for (int y = 1; y < board.Size+1; y++)
+            {
+                board.generated_board[3, y].Piece = new Pawn("WHITE");
+                board.generated_board[8, y].Piece = new Pawn("BLACK");
             }
         }
     }
