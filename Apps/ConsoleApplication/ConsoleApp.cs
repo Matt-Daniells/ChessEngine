@@ -19,31 +19,35 @@ namespace ChessEngine
             switch (KeyPress.Key)
             {
                 case ConsoleKey.Escape:
+
                     Environment.Exit(0);
                     break;
 
                 case ConsoleKey.N:
-                    Console.WriteLine("Which side do you want to play as? (w or b)");
 
+                    Console.WriteLine("Which side do you want to play as? (w or b)");
                     KeyPress = Console.ReadKey();
                     Console.WriteLine();
 
-                    switch (KeyPress.Key)
+                    while (true)
                     {
-                        case ConsoleKey.W:
-                            StartGame(board, "White");
-                            break;
-                    
-                        case ConsoleKey.B:
-                            StartGame(board, "Black");
-                            break;
+                        switch (KeyPress.Key)
+                        {
+                            case ConsoleKey.W:
+                                StartGame(board, "White");
+                                return;
+                        
+                            case ConsoleKey.B:
+                                StartGame(board, "Black");
+                                return;
 
-                        // need to fix so that it loops
-                        default:
-                            Console.WriteLine("Invalid input, exiting...");
-                            break;
+                            default:
+                                Console.WriteLine("Invalid input, please try again...");
+                                KeyPress = Console.ReadKey();
+                                Console.WriteLine();
+                                continue; // loop back for retry
+                        }
                     }
-                    break;
 
                 default:
                     break;

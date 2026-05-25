@@ -12,35 +12,58 @@ namespace Board
     {
         public BoardGen Board { get; }
 
-    
+        // read a line of move input, cancel when esc is pressed
+        private static string? ReadMoveInput(CancellationToken token)
+        {
+            var sb = new System.Text.StringBuilder();
+            while (true)
+            {
+                if (token.IsCancellationRequested) return null;
+                
+                while (Console.KeyAvailable)
+                {
+                    var key = Console.ReadKey(true);
+                    if (key.Key == ConsoleKey.Escape) return null;
+                    if (key.Key == ConsoleKey.Enter)
+                    {
+                        Console.WriteLine();
+                        return sb.ToString();
+                    }
+                    if (key.Key == ConsoleKey.Backspace && sb.Length > 0)
+                    {
+                        sb.Length--;
+                        Console.Write("\b \b");
+                    }
+                    else if (!char.IsControl(key.KeyChar))
+                    {
+                        sb.Append(key.KeyChar);
+                        Console.Write(key.KeyChar);
+                    }
+                }
+                System.Threading.Thread.Sleep(10);
+            }
+        }
 
         // create a game using the provided board and the player color to move first
-        public Game(BoardGen board, string Colour)
+        public Game(BoardGen board, string colour)
         {
-            GameState gamestate;
             Board = board ?? throw new System.ArgumentNullException(nameof(board));
-            String colour = Colour;
+            GameState gamestate = (colour=="White") ? GameState.WHITEMOVE : GameState.BLACKMOVE;
 
-            if (colour=="White") {gamestate = GameState.WHITEMOVE;}
-            else {gamestate = GameState.BLACKMOVE;}
+            using var cts = new CancellationTokenSource();
         
             while (gamestate != GameState.GAMEOVER)
             {   
                 // read a move from the console and switch turns
                 Console.WriteLine($"{colour} to move: ");
-                string? move = Console.ReadLine();
+                string? move = ReadMoveInput(cts.Token);
                 
-                // requires physically typing esc to exit, needs work to allow esc key without consuming move input
-                if (string.IsNullOrWhiteSpace(move))
-                {
-                    continue;
-                }
-
-                if (move.Equals("Esc", StringComparison.OrdinalIgnoreCase))
-                {
+                if (move is null)
                     break;
-                }
 
+                if (string.IsNullOrWhiteSpace(move))
+                    continue;
+                
                 Notation(move);
 
                 bool whiteTurn = colour == "White";
