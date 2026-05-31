@@ -15,7 +15,7 @@ namespace Board
         // read a line of move input, cancel when esc is pressed
         private static string? ReadMoveInput(CancellationToken token)
         {
-            var sb = new System.Text.StringBuilder();
+            var string_builder = new System.Text.StringBuilder();
             while (true)
             {
                 if (token.IsCancellationRequested) return null;
@@ -27,16 +27,16 @@ namespace Board
                     if (key.Key == ConsoleKey.Enter)
                     {
                         Console.WriteLine();
-                        return sb.ToString();
+                        return string_builder.ToString();
                     }
-                    if (key.Key == ConsoleKey.Backspace && sb.Length > 0)
+                    if (key.Key == ConsoleKey.Backspace && string_builder.Length > 0)
                     {
-                        sb.Length--;
+                        string_builder.Length--;
                         Console.Write("\b \b");
                     }
                     else if (!char.IsControl(key.KeyChar))
                     {
-                        sb.Append(key.KeyChar);
+                        string_builder.Append(key.KeyChar);
                         Console.Write(key.KeyChar);
                     }
                 }
@@ -64,7 +64,7 @@ namespace Board
                 if (string.IsNullOrWhiteSpace(move))
                     continue;
                 
-                Notation(move);
+                EvaluateNotation(move);
 
                 bool whiteTurn = colour == "White";
                 colour = whiteTurn ? "Black" : "White";
@@ -72,10 +72,31 @@ namespace Board
             }
         }
 
-        // handle algebraic notation or move text - not yet implemented
-        public static void Notation(string? notation)
+        // handle algebraic notation or move text - uses long algebraic notation (for now)
+        public void EvaluateNotation(string notation)
         {
-            Console.WriteLine(notation);
+            /* List<Char> Pieces = ['P', 'N', 'B', 'R', 'Q', 'K'];
+
+            // get list of possible rank values given a custom board size 
+            IEnumerable<int> enumerable_ranks = Enumerable.Range(1, Board.Size);
+            List<int> rank_vals = enumerable_ranks.ToList();
+
+            // get list of possible file values given a custom board size 
+            IEnumerable<int> enumerable_files = Enumerable.Range('a', Board.Size);
+            List<int> file_vals = enumerable_files.ToList();
+
+            
+
+            string[] isolated_positions = notation.Split('x', '+', '=');
+
+            if (isolated_positions[0].Length == 2) {isolated_positions[0].Insert(0, "P");}
+            Console.WriteLine(isolated_positions[0].Length.ToString());
+
+            foreach (object o in isolated_positions)
+            {
+                Console.WriteLine(o);
+            } */
+
         }
     }
 }
