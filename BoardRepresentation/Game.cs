@@ -64,39 +64,12 @@ namespace Board
                 if (string.IsNullOrWhiteSpace(move))
                     continue;
                 
-                EvaluateNotation(move);
+                var try_move = new Move(board, move);
 
                 bool whiteTurn = colour == "White";
                 colour = whiteTurn ? "Black" : "White";
                 gamestate = whiteTurn ? GameState.BLACKMOVE : GameState.WHITEMOVE;
             }
-        }
-
-        // handle algebraic notation or move text - uses long algebraic notation (for now)
-        public void EvaluateNotation(string notation)
-        {
-            /* List<Char> Pieces = ['P', 'N', 'B', 'R', 'Q', 'K'];
-
-            // get list of possible rank values given a custom board size 
-            IEnumerable<int> enumerable_ranks = Enumerable.Range(1, Board.Size);
-            List<int> rank_vals = enumerable_ranks.ToList();
-
-            // get list of possible file values given a custom board size 
-            IEnumerable<int> enumerable_files = Enumerable.Range('a', Board.Size);
-            List<int> file_vals = enumerable_files.ToList();
-
-            
-
-            string[] isolated_positions = notation.Split('x', '+', '=');
-
-            if (isolated_positions[0].Length == 2) {isolated_positions[0].Insert(0, "P");}
-            Console.WriteLine(isolated_positions[0].Length.ToString());
-
-            foreach (object o in isolated_positions)
-            {
-                Console.WriteLine(o);
-            } */
-
         }
     }
 }
