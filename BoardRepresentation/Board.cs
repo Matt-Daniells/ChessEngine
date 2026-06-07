@@ -42,5 +42,23 @@ namespace Board
             // current board size for the playable area
             get { return BOARD_SIZE; }
         }
+
+        public Square? LookupSquare(string rank_and_file)
+        {
+            if (string.IsNullOrWhiteSpace(rank_and_file) || rank_and_file.Length != 2)
+            {
+                return null;
+            }
+
+            int file_index = char.ToLowerInvariant(rank_and_file[0]) - 'a';
+            int rank_index = rank_and_file[1] - '1';
+
+            if (file_index < 0 || file_index >= Size || rank_index < 0 || rank_index >= Size)
+            {
+                return null;
+            }
+
+            return generated_board[rank_index + 2, file_index + 1];
+        }
     }
 }
