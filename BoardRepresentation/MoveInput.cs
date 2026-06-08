@@ -1,35 +1,35 @@
-namespace Board
+﻿namespace Board
 {
     public class Move
     {
-        public BoardGen board { get; }
-        public string notation {get;}
+        public BoardGen Board { get; }
+        public string Notation { get; }
 
-        public Move(BoardGen Board, string Notation)
+        public Move(BoardGen board, string notation)
         {
-            board = Board ?? throw new ArgumentNullException(nameof(board));
-            notation = Notation ?? throw new ArgumentNullException(nameof(notation));
+            Board = board ?? throw new ArgumentNullException(nameof(board));
+            Notation = notation ?? throw new ArgumentNullException(nameof(notation));
             //SplitNotation();
-            foreach(var chunk in SplitNotation())
+            foreach (var chunk in SplitNotation())
             {
                 if (chunk.Length > 2)
                 {
-                    string square_string = chunk[1].ToString() + chunk[2];
-                    Square s = (Square)board.LookupSquare(square_string);
+                    string squareString = chunk[1].ToString() + chunk[2];
+                    Square square = (Square)Board.LookupSquare(squareString);
                     char piece = chunk[0];
-                    Console.WriteLine(CheckOccupation(piece, s).ToString());
+                    Console.WriteLine(CheckOccupation(piece, square).ToString());
                 }
             }
         }
 
         private List<string> SplitNotation()
         {
-            char[] splitters = ['x','+','='];
-            List<string> chunks = [.. notation.Split(splitters)];
+            char[] splitters = ['x', '+', '='];
+            List<string> chunks = [.. Notation.Split(splitters)];
 
-            foreach (char c in notation)
+            foreach (char c in Notation)
             {
-                if (splitters.Contains(c)) {chunks.Add(c.ToString());}
+                if (splitters.Contains(c)) { chunks.Add(c.ToString()); }
             }
 
             return chunks;
@@ -37,13 +37,13 @@ namespace Board
 
         private bool Castling()
         {
-            return notation[0] == 'O';
+            return Notation[0] == 'O';
         }
 
         private string CastlingDirection()
         {
-            string side = SplitNotation().Count > 2 
-            ? "Queen" 
+            string side = SplitNotation().Count > 2
+            ? "Queen"
             : "King";
 
             return side;
@@ -53,8 +53,8 @@ namespace Board
         {
             if (square.IsOccupied())
             {
-                string type_string = square.Piece.Type.ToString();
-                return char.ToUpperInvariant(type_string[0]) == char.ToUpperInvariant(piece);
+                string typeString = square.Piece.Type.ToString();
+                return char.ToUpperInvariant(typeString[0]) == char.ToUpperInvariant(piece);
             }
 
             return false;

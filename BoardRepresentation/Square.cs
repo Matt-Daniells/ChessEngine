@@ -1,4 +1,4 @@
-namespace Board
+﻿namespace Board
 {
     // represents a single board square including position, occupancy, and metadata
     // the struct is used inside the board array for fast access

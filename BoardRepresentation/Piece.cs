@@ -1,4 +1,4 @@
-namespace Board
+﻿namespace Board
 {
     // represents all supported chess piece types
     public enum PieceType
@@ -14,21 +14,21 @@ namespace Board
     // base class for all chess pieces, holds type and color
     public abstract class Piece
     {
-        private readonly string piece_colour;
-        private readonly PieceType piece_type;
+        private readonly string _pieceColour;
+        private readonly PieceType _pieceType;
         // U=unicode symbol used for console rendering
         public abstract char Unicode { get; }
 
         protected Piece(string colour, PieceType type)
         {
-            piece_colour = colour;
-            piece_type = type;
+            _pieceColour = colour;
+            _pieceType = type;
         }
 
         // returns the piece color string, e.g. "WHITE" or "BLACK"
-        public string Colour => piece_colour;
+        public string Colour => _pieceColour;
 
         // rturns the piece type enum for this piece
-        public PieceType Type => piece_type;
+        public PieceType Type => _pieceType;
     }
 }
