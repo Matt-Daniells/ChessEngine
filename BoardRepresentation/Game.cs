@@ -1,75 +1,85 @@
-﻿namespace Board
+﻿namespace Board;
+
+// tracks the current game state for turn order and end of game
+public enum GameState
 {
-    // tracks the current game state for turn order and end of game
-    public enum GameState
+    GAMEOVER,
+    WHITEMOVE,
+    BLACKMOVE
+}
+
+public class Game
+{
+    public BoardGen Board { get; }
+
+    // read a line of move input, cancel when esc is pressed
+    private static string? ReadMoveInput(CancellationToken token)
     {
-        GAMEOVER,
-        WHITEMOVE,
-        BLACKMOVE
+        var stringBuilder = new System.Text.StringBuilder();
+        while (true)
+        {
+            if (token.IsCancellationRequested)
+            {
+                return null;
+            }
+
+            while (Console.KeyAvailable)
+            {
+                ConsoleKeyInfo key = Console.ReadKey(true);
+                if (key.Key == ConsoleKey.Escape)
+                {
+                    return null;
+                }
+
+                if (key.Key == ConsoleKey.Enter)
+                {
+                    Console.WriteLine();
+                    return stringBuilder.ToString();
+                }
+                if (key.Key == ConsoleKey.Backspace && stringBuilder.Length > 0)
+                {
+                    stringBuilder.Length--;
+                    Console.Write("\b \b");
+                }
+                else if (!char.IsControl(key.KeyChar))
+                {
+                    _ = stringBuilder.Append(key.KeyChar);
+                    Console.Write(key.KeyChar);
+                }
+            }
+            Thread.Sleep(10);
+        }
     }
 
-    public class Game
+    // create a game using the provided board and the player color to move first
+    public Game(BoardGen board, string colour)
     {
-        public BoardGen Board { get; }
+        Board = board ?? throw new ArgumentNullException(nameof(board));
+        GameState gameState = (colour == "White") ? GameState.WHITEMOVE : GameState.BLACKMOVE;
 
-        // read a line of move input, cancel when esc is pressed
-        private static string? ReadMoveInput(CancellationToken token)
+        using var cts = new CancellationTokenSource();
+
+        while (gameState != GameState.GAMEOVER)
         {
-            var stringBuilder = new System.Text.StringBuilder();
-            while (true)
+            // read a move from the console and switch turns
+            Console.WriteLine($"{colour} to move: ");
+            string? move = ReadMoveInput(cts.Token);
+
+            if (move is null)
             {
-                if (token.IsCancellationRequested) return null;
-
-                while (Console.KeyAvailable)
-                {
-                    var key = Console.ReadKey(true);
-                    if (key.Key == ConsoleKey.Escape) return null;
-                    if (key.Key == ConsoleKey.Enter)
-                    {
-                        Console.WriteLine();
-                        return stringBuilder.ToString();
-                    }
-                    if (key.Key == ConsoleKey.Backspace && stringBuilder.Length > 0)
-                    {
-                        stringBuilder.Length--;
-                        Console.Write("\b \b");
-                    }
-                    else if (!char.IsControl(key.KeyChar))
-                    {
-                        stringBuilder.Append(key.KeyChar);
-                        Console.Write(key.KeyChar);
-                    }
-                }
-                System.Threading.Thread.Sleep(10);
+                break;
             }
-        }
 
-        // create a game using the provided board and the player color to move first
-        public Game(BoardGen board, string colour)
-        {
-            Board = board ?? throw new System.ArgumentNullException(nameof(board));
-            GameState gameState = (colour == "White") ? GameState.WHITEMOVE : GameState.BLACKMOVE;
-
-            using var cts = new CancellationTokenSource();
-
-            while (gameState != GameState.GAMEOVER)
+            if (string.IsNullOrWhiteSpace(move))
             {
-                // read a move from the console and switch turns
-                Console.WriteLine($"{colour} to move: ");
-                string? move = ReadMoveInput(cts.Token);
-
-                if (move is null)
-                    break;
-
-                if (string.IsNullOrWhiteSpace(move))
-                    continue;
-
-                var tryMove = new Move(board, move);
-
-                bool whiteTurn = colour == "White";
-                colour = whiteTurn ? "Black" : "White";
-                gameState = whiteTurn ? GameState.BLACKMOVE : GameState.WHITEMOVE;
+                continue;
             }
+
+            var tryMove = new Move(board, move);
+
+            bool whiteTurn = colour == "White";
+            colour = whiteTurn ? "Black" : "White";
+            gameState = whiteTurn ? GameState.BLACKMOVE : GameState.WHITEMOVE;
         }
     }
 }
