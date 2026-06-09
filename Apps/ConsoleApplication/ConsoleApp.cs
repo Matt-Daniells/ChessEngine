@@ -6,54 +6,60 @@ namespace ChessEngine;
 
 public class Program
 {
-    // main entry point. Prompts the user, chooses sides, and starts a game
-    private static void Main()
+    internal interface IConsole
     {
+        ConsoleKeyInfo ReadKey();
+        void WriteLine(string value);
+    }
 
+    internal class SystemConsole : IConsole
+    {
+        public ConsoleKeyInfo ReadKey() => Console.ReadKey();
+        public void WriteLine(string value) => Console.WriteLine(value);
+    }
+    // main entry point. Only calls run() method
+    public static void Main() => Run(new SystemConsole());
+
+    internal static int Run(IConsole console)
+    {
         var board = new BoardGen();
+        console.WriteLine("Press n to start a game, or Esc to exit.");
+        var keyPress = console.ReadKey();
+        console.WriteLine("\n");
 
-        Console.WriteLine("Press n to start a game, or Esc to exit.");
-        ConsoleKeyInfo keyPress = Console.ReadKey();
-        Console.WriteLine();
-
-        switch (keyPress.Key)
+        return keyPress.Key switch
         {
-            case ConsoleKey.Escape:
+            ConsoleKey.Escape => 0,
+            ConsoleKey.N => HandleNewGame(console, board),
+            _ => 1
+        };
+    }
 
-                Environment.Exit(0);
-                break;
+    private static int HandleNewGame(IConsole console, BoardGen board)
+    {
+        console.WriteLine("Which side do you want to play as? (w or b)");
+        var keyPress = console.ReadKey();
+        console.WriteLine("\n");
 
-            case ConsoleKey.N:
+        while (true)
+        {
+            switch (keyPress.Key)
+            {
+                case ConsoleKey.W:
+                    StartGame(board, "White");
+                    return 0;
 
-                Console.WriteLine("Which side do you want to play as? (w or b)");
-                keyPress = Console.ReadKey();
-                Console.WriteLine();
+                case ConsoleKey.B:
+                    StartGame(board, "Black");
+                    return 0;
 
-                while (true)
-                {
-                    switch (keyPress.Key)
-                    {
-                        case ConsoleKey.W:
-                            StartGame(board, "White");
-                            return;
-
-                        case ConsoleKey.B:
-                            StartGame(board, "Black");
-                            return;
-
-                        default:
-                            Console.WriteLine("Invalid input, please try again...");
-                            keyPress = Console.ReadKey();
-                            Console.WriteLine();
-                            continue; // loop back for retry
-                    }
-                }
-
-            default:
-                break;
+                default:
+                    Console.WriteLine("Invalid input, please try again...");
+                    keyPress = Console.ReadKey();
+                    Console.WriteLine();
+                    continue; // loop back for retry
+            }
         }
-
-
     }
 
     private static void StartGame(BoardGen board, string colour)
