@@ -1,5 +1,7 @@
 ﻿namespace Board.Pieces;
 
+using Board;
+
 public class King(string colour) : Piece(colour, PieceType.King)
 {
     private const char WhiteUnicode = '\u2654';

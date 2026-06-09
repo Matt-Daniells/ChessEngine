@@ -8,7 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\BoardRepresentation\Board.csproj" />
+    <ProjectReference Include="BoardRepresentation\Board.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="BoardRepresentation\**\*.cs" />
+    <Compile Remove="ConsoleAppTests\**\*.cs" />
   </ItemGroup>
 
 </Project>

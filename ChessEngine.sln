@@ -7,9 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChessEngine", "Apps\Console
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BoardRepresentation", "BoardRepresentation", "{AB26824E-3E15-4CDB-A7CE-FCC3030DF958}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Board", "BoardRepresentation\Board.csproj", "{28E39504-F47E-405D-8D1D-C4024AC52FBD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Board", "Apps\ConsoleApplication\BoardRepresentation\Board.csproj", "{28E39504-F47E-405D-8D1D-C4024AC52FBD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppTests", "Apps\ConsoleAppTests\ConsoleAppTests.csproj", "{A5C142E4-E97C-49DE-83AB-8272B6005F56}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppTests", "Apps\ConsoleApplication\ConsoleAppTests\ConsoleAppTests.csproj", "{A5C142E4-E97C-49DE-83AB-8272B6005F56}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

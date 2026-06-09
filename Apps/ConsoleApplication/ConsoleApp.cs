@@ -1,7 +1,6 @@
 ﻿using Board;
 using Board.Pieces;
 
-
 namespace ChessEngine;
 
 public class Program

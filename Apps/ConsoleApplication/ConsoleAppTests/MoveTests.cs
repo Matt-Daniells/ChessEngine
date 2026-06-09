@@ -1,10 +1,11 @@
 ﻿namespace ConsoleAppTests;
 
-public class UnitTest1
+public class MoveTests
 {
     [Fact]
     public void Test1()
     {
-
+        // Arrange
+        //
     }
 }
