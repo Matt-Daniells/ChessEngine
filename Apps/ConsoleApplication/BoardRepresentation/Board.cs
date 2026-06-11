@@ -10,7 +10,7 @@ public class BoardGen
     private const int WidthPadding = 2;
 
     public Square[,] GeneratedBoard { get; private set; } = null!;
-    public static int Size => BoardSize;
+    public int Size => BoardSize;
 
     public BoardGen() => GenerateBoard();
 
@@ -60,6 +60,6 @@ public class BoardGen
         return SquareOutOfBounds(fileIndex, rankIndex) ? null : GeneratedBoard[rankIndex + (HeightPadding / 2), fileIndex + (WidthPadding / 2)];
     }
 
-    public static bool SquareOutOfBounds(int fileIndex, int rankIndex) => fileIndex < 0 || fileIndex >= Size || rankIndex < 0 || rankIndex >= Size;
+    public bool SquareOutOfBounds(int fileIndex, int rankIndex) => fileIndex < 0 || fileIndex >= Size || rankIndex < 0 || rankIndex >= Size;
 
 }

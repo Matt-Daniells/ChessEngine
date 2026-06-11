@@ -11,6 +11,7 @@ public enum GameState
 public class Game
 {
     public BoardGen Board { get; }
+    public GameState GameState { get; set; }
 
     // read a line of move input, cancel when esc is pressed
     private static string? ReadMoveInput(CancellationToken token)
@@ -51,40 +52,48 @@ public class Game
         }
     }
 
-    // create a game using the provided board and the player color to move first
+    // only called within Game constructor while GameOver is not an option
+    private string GetColourString() => GameState == GameState.WHITEMOVE ? "White" : "Black";
+    private GameState FlipSides() => GameState == GameState.WHITEMOVE ? GameState.BLACKMOVE : GameState.WHITEMOVE;
+
     public Game(BoardGen board, string colour)
     {
         Board = board ?? throw new ArgumentNullException(nameof(board));
-        GameState gameState = (colour == "White") ? GameState.WHITEMOVE : GameState.BLACKMOVE;
+        GameState = (colour == "White") ? GameState.WHITEMOVE : GameState.BLACKMOVE;
+        GameLoop();
+    }
 
+    public void GameLoop()
+    {
         using var cts = new CancellationTokenSource();
-
-        while (gameState != GameState.GAMEOVER)
+        while (GameState != GameState.GAMEOVER)
         {
-            // read a move from the console and switch turns
-            Console.WriteLine($"{colour} to move: ");
-            string? move = ReadMoveInput(cts.Token);
-
-            if (move is null)
-            {
-                break;
-            }
-
+            string? move = GetAndParseMove(cts);
             if (string.IsNullOrWhiteSpace(move))
             {
+                if (move is null) { break; }
+                Console.WriteLine("You must enter a valid move.");
                 continue;
             }
 
-            var tryMove = new Move(board, move);
+            try
+            {
+                //need to work on this to validate the move was successful
+                var _ = new Move(Board, move);
+            }
 
-            bool whiteTurn = colour == "White";
-            colour = whiteTurn ? "Black" : "White";
-            gameState = whiteTurn ? GameState.BLACKMOVE : GameState.WHITEMOVE;
+            catch (Exception)
+            {
+                Console.WriteLine("Move failed. Please check your notation and try again");
+            }
+            GameState = FlipSides();
         }
     }
 
-    public void FlipSides(string colour, GameState gameState)
+    public string? GetAndParseMove(CancellationTokenSource cts)
     {
-        //
+        Console.WriteLine($"{GetColourString()} to move: ");
+        string? move = ReadMoveInput(cts.Token);
+        return move;
     }
 }
