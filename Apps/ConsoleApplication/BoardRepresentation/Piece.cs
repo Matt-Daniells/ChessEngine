@@ -18,8 +18,8 @@ public abstract class Piece(string colour, PieceType type)
     // U=unicode symbol used for console rendering
     public abstract char Unicode { get; }
 
-    // returns the piece color string, e.g. "WHITE" or "BLACK"
-    public string Colour { get; } = colour;
+    // returns the piece color string normalized to uppercase, e.g. "WHITE" or "BLACK"
+    public string Colour { get; } = colour?.ToUpperInvariant();
 
     // rturns the piece type enum for this piece
     public PieceType Type { get; } = type;

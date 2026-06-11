@@ -69,52 +69,32 @@ public class Program
         _ = new Game(board, colour);
     }
 
+    private static (IEnumerable<int> rankRange, IEnumerable<int> fileRange, string fileLabels) GetBoardOrientation(string colour) =>
+        colour == "White"
+        ? (Enumerable.Range(2, 8).Reverse(), Enumerable.Range(1, 8), "a b c d e f g h")
+        : (Enumerable.Range(2, 8), Enumerable.Range(1, 8).Reverse(), "h g f e d c b a");
+
+    private static string GetRankLabel(int rowIndex, string colour, BoardGen board)
+    {
+        int rank = rowIndex - 1;
+
+        return colour == "White"
+            ? rank.ToString()
+            : (board.Size + 1 - rank).ToString();
+    }
+
     // render the board from the perspective of the player (Dependent on colour)
     private static void PrintBoard(BoardGen board, string colour)
     {
-        int size = board.Size;
-
-        Console.OutputEncoding = System.Text.Encoding.UTF8;
-        Console.WriteLine();
-
-        //needs refactoring
-        if (colour == "White")
+        var (rankRange, fileRange, labels) = GetBoardOrientation(colour);
+        foreach (var x in rankRange)
         {
-            for (int x = size + 1; x >= 2; x--)
-            {
-                Console.ResetColor();
-                Console.Write($"{x - 2 + 1} "); //rank labels
-
-                for (int y = 1; y <= size; y++)
-                {
-                    PrintSquare(board, x, y);
-                }
-                Console.WriteLine();
-            }
-            Console.WriteLine("  a b c d e f g h"); // file labels
+            Console.Write($"{GetRankLabel(x, colour, board)} ");
+            foreach (var y in fileRange)
+            { PrintSquare(board, x, y); }
+            Console.WriteLine();
         }
-
-        else if (colour == "Black")
-        {
-            for (int x = 2; x <= size + 1; x++)
-            {
-                Console.ResetColor();
-                Console.Write($"{x - 2 + 1} "); //rank labels
-
-                for (int y = size; y >= 1; y--)
-                {
-                    PrintSquare(board, x, y);
-                }
-                Console.WriteLine();
-            }
-            Console.WriteLine("  h g f e d c b a"); // file labels
-        }
-
-        else
-        {
-            Console.WriteLine("Wrong input");
-        }
-        Console.WriteLine();
+        Console.WriteLine($"  {labels}");
     }
 
     // draw a single square on the console, including the board color and piece symbol (If there is one)
@@ -123,8 +103,9 @@ public class Program
         bool isLightSquare = (x + y) % 2 == 0;
 
         Console.BackgroundColor = isLightSquare ? ConsoleColor.Gray : ConsoleColor.Green; // makes the pieces easier to see
-        Console.ForegroundColor = ConsoleColor.Black;
-        Console.Write($"{board.GeneratedBoard[x, y].Piece?.Unicode ?? ' '} ");
+        var piece = board.GeneratedBoard[x, y].Piece;
+        Console.ForegroundColor = piece is null ? ConsoleColor.Black : (piece.Colour == "WHITE" ? ConsoleColor.White : ConsoleColor.Black);
+        Console.Write($"{piece?.Unicode ?? ' '} ");
         Console.ResetColor();
     }
 
