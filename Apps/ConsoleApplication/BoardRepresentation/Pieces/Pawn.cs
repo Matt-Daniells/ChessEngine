@@ -1,7 +1,5 @@
 ﻿namespace Board.Pieces;
 
-using Board;
-
 public class Pawn(string colour) : Piece(colour, PieceType.Pawn)
 {
     private const char WhiteUnicode = '\u2659';

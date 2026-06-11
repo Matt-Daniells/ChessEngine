@@ -6,40 +6,46 @@ public class BoardGen
 {
     // standard chess board size (8x8)
     private const int BoardSize = 8;
-    public Square[,] GeneratedBoard { get; private set; }
+    private const int HeightPadding = 4;
+    private const int WidthPadding = 2;
 
-    public BoardGen()
-    {
-        // add sentinel squares around the playable board so out of bounds detection is easier
-        GeneratedBoard = new Square[BoardSize + 4, BoardSize + 2];
-        GenerateBoard();
-    }
+    public Square[,] GeneratedBoard { get; private set; } = null!;
+    public static int Size => BoardSize;
+
+    public BoardGen() => GenerateBoard();
 
     private void GenerateBoard()
     {
-        // initialize all squares and mark them as invalid until the playable board is assigned
-        for (int x = 0; x < BoardSize + 4; x++)
+        GeneratedBoard = new Square[BoardSize + HeightPadding, BoardSize + WidthPadding];
+        InitialiseSentinelValues();
+        InitialisePlayableBoardValues();
+    }
+
+    private void InitialiseSentinelValues()
+    {
+        // initialise all squares and mark them as invalid until the playable board is assigned
+        for (int x = 0; x < BoardSize + HeightPadding; x++)
         {
-            for (int y = 0; y < BoardSize + 2; y++)
+            for (int y = 0; y < BoardSize + WidthPadding; y++)
             {
                 GeneratedBoard[x, y].SetValue(-1);
             }
         }
+    }
 
-        // set values within the 8x8 board 0-63
+    private void InitialisePlayableBoardValues()
+    {
+        // set values within the 8x8 playable board 0-63
         int i = 0;
-        for (int x = 2; x < BoardSize + 2; x++)
+        for (int x = 2; x < BoardSize + (HeightPadding / 2); x++)
         {
-            for (int y = 1; y < BoardSize + 1; y++)
+            for (int y = 1; y < BoardSize + (WidthPadding / 2); y++)
             {
                 GeneratedBoard[x, y].SetValue(i);
                 i++;
             }
         }
     }
-    public int Size
-        // current board size for the playable area
-        => BoardSize;
 
     public Square? LookupSquare(string rankAndFile)
     {
@@ -50,7 +56,10 @@ public class BoardGen
 
         int fileIndex = char.ToLowerInvariant(rankAndFile[0]) - 'a';
         int rankIndex = rankAndFile[1] - '1';
-
-        return fileIndex < 0 || fileIndex >= Size || rankIndex < 0 || rankIndex >= Size ? null : GeneratedBoard[rankIndex + 2, fileIndex + 1];
+        // validate bounds: return null if out of playable range
+        return SquareOutOfBounds(fileIndex, rankIndex) ? null : GeneratedBoard[rankIndex + (HeightPadding / 2), fileIndex + (WidthPadding / 2)];
     }
+
+    public static bool SquareOutOfBounds(int fileIndex, int rankIndex) => fileIndex < 0 || fileIndex >= Size || rankIndex < 0 || rankIndex >= Size;
+
 }

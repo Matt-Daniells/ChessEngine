@@ -82,4 +82,9 @@ public class Game
             gameState = whiteTurn ? GameState.BLACKMOVE : GameState.WHITEMOVE;
         }
     }
+
+    public void FlipSides(string colour, GameState gameState)
+    {
+        //
+    }
 }

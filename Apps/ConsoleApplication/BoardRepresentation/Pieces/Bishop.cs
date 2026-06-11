@@ -1,7 +1,5 @@
 ﻿namespace Board.Pieces;
 
-using Board;
-
 // Bishop piece implementation with Unicode symbols for white and black.
 public class Bishop(string colour) : Piece(colour, PieceType.Bishop)
 {
