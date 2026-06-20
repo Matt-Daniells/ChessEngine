@@ -78,9 +78,7 @@ public class Program
     {
         int rank = rowIndex - 1;
 
-        return colour == "White"
-            ? rank.ToString()
-            : (board.Size + 1 - rank).ToString();
+        return rank.ToString();
     }
 
     // render the board from the perspective of the player (Dependent on colour)
